@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import Gallery from "react-native-image-gallery";
 import RNFetchBlob from "rn-fetch-blob";
-import Orientation from "react-native-orientation";
+import Orientation from 'react-native-orientation-locker';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 export default class RepresentantesFotos extends Component {

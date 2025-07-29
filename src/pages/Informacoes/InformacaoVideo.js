@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
 
 // import Video from 'react-native-video';
-import Orientation from 'react-native-orientation';
+import Orientation from 'react-native-orientation-locker';
 import {WebView} from 'react-native-webview';
 
 export default class InformacaoVideo extends Component {

@@ -9,7 +9,7 @@ import {
   SafeAreaView
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Orientation from "react-native-orientation";
+import Orientation from 'react-native-orientation-locker';
 
 const logo = require("../images/logo.png");
 

@@ -11,7 +11,7 @@ import {
   Modal,
 } from 'react-native';
 
-import Orientation from 'react-native-orientation';
+import Orientation from 'react-native-orientation-locker';
 
 const logo = require('../../images/logo.png');
 

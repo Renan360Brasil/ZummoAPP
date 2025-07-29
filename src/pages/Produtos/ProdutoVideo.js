@@ -6,7 +6,7 @@ import {
   SafeAreaView
 } from "react-native";
 import { WebView } from 'react-native-webview';
-import Orientation from "react-native-orientation";
+import Orientation from 'react-native-orientation-locker';
 
 export default class ProdutoVideo extends Component {
   state = {

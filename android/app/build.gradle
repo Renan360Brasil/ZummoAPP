@@ -131,6 +131,7 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
 android {
+    namespace "com.br.app.zummo"
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -139,9 +140,15 @@ android {
         applicationId "com.br.app.zummo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20
+        versionCode 21
         versionName "1.9.7"
     }
+// Configuração para alinhar JVM Target Kotlin para Java 8
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
     packagingOptions {
        pickFirst 'lib/x86/libc++_shared.so'
        pickFirst 'lib/x86_64/libjsc.so'
@@ -209,7 +216,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
-    implementation ("androidx.appcompat:appcompat:1.3.1") {
+    implementation ("androidx.appcompat:appcompat:1.6.1") {
         version {
             strictly '1.3.1'
         }
@@ -245,6 +252,66 @@ dependencies {
 task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.implementation
     into 'libs'
+}
+
+// Workaround para Gradle 8 - dependência explícita entre tasks
+afterEvaluate {
+    def parseDebugLocalResources = tasks.findByName("parseDebugLocalResources")
+    def processDebugMainManifest = tasks.findByName("processDebugMainManifest")
+    def copyDebugReactNativeVectorIconFonts = tasks.findByName("copyDebugReactNativeVectorIconFonts")
+    def compressDebugAssets = tasks.findByName("compressDebugAssets")
+    def mergeExtDexDebug = tasks.findByName("mergeExtDexDebug")
+    def mergeDebugNativeLibs = tasks.findByName("mergeDebugNativeLibs")
+    def mergeDebugJavaResource = tasks.findByName("mergeDebugJavaResource")
+    def mergeLibDexDebug = tasks.findByName("mergeLibDexDebug") // <-- adicionada aqui
+
+    def dependenciesForParseDebugLocalResources = [
+        "checkDebugAarMetadata",
+        "javaPreCompileDebug",
+        "mergeDebugResources",
+        "mapDebugSourceSetPaths",
+        "copyDebugReactNativeVectorIconFonts"
+    ]
+
+    if (parseDebugLocalResources != null) {
+        dependenciesForParseDebugLocalResources.each { taskName ->
+            def task = tasks.findByName(taskName)
+            if (task != null) {
+                parseDebugLocalResources.dependsOn(task)
+            }
+        }
+    }
+
+    if (processDebugMainManifest != null && copyDebugReactNativeVectorIconFonts != null) {
+        processDebugMainManifest.dependsOn(copyDebugReactNativeVectorIconFonts)
+    }
+
+    if (copyDebugReactNativeVectorIconFonts != null && compressDebugAssets != null) {
+        compressDebugAssets.dependsOn(copyDebugReactNativeVectorIconFonts)
+    }
+
+    if (copyDebugReactNativeVectorIconFonts != null && mergeExtDexDebug != null) {
+        mergeExtDexDebug.dependsOn(copyDebugReactNativeVectorIconFonts)
+    }
+
+    if (copyDebugReactNativeVectorIconFonts != null && mergeDebugNativeLibs != null) {
+        mergeDebugNativeLibs.dependsOn(copyDebugReactNativeVectorIconFonts)
+    }
+
+    if (copyDebugReactNativeVectorIconFonts != null && mergeDebugJavaResource != null) {
+        mergeDebugJavaResource.dependsOn(copyDebugReactNativeVectorIconFonts)
+    }
+
+    if (copyDebugReactNativeVectorIconFonts != null && mergeLibDexDebug != null) {  // <-- aqui
+        mergeLibDexDebug.dependsOn(copyDebugReactNativeVectorIconFonts)
+    }
+
+        tasks.whenTaskAdded { task ->
+        if (task.name == 'preReleaseBuild') {
+            task.dependsOn('copyReleaseReactNativeVectorIconFonts')
+            task.dependsOn('bundleReleaseJsAndAssets')
+        }
+    }
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

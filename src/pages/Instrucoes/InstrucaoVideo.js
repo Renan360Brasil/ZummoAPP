@@ -5,7 +5,7 @@ import {
   ActivityIndicator,
   SafeAreaView
 } from "react-native";
-import Orientation from "react-native-orientation";
+import Orientation from 'react-native-orientation-locker';
 import { WebView } from "react-native-webview";
 
 export default class InstrucaoVideo extends Component {
