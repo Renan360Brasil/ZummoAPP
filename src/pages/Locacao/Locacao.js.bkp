@@ -1,0 +1,129 @@
+import React, { Component } from "react";
+import {
+  View,
+  ScrollView,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  SafeAreaView,
+  TouchableOpacity
+} from "react-native";
+
+const window = Dimensions.get("window");
+const logo = require("../../images/logo.png");
+
+export default class Locacao extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loader: false
+    };
+  }
+
+  static navigationOptions = {
+    title: "Locação"
+    //header: null,
+  };
+
+  render() {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView style={styles.container}>
+          <View style={{ flex: 1, padding: 20 }}>
+            <Text style={styles.text}>
+              Oferecemos a solução mais atrativa de locação do mercado, que lhe
+              permite preservar suas linhas de credito junto aos bancos e fazer
+              um investimento rentável ao longo do ciclo de vida dos seus
+              equipamentos. Sua empresa busca expandir os negócios e precisa de
+              um parceiro que possa ajuda-lo em seus investimentos? A ZUMMO tem
+              a melhor opção pra você que quer crescer com consistência.
+            </Text>
+            <Text style={styles.text}>Suas vantagens como cliente:</Text>
+            <Text style={styles.text}>
+              • Protege o fluxo de caixa da sua empresa.
+            </Text>
+            <Text style={styles.text}>
+              • Melhora a sua classificação de credito juntos aos bancos.
+            </Text>
+            <Text style={styles.text}>
+              • Mensalidades fixas sem correção do IGP-M durante todo o
+              contrato.
+            </Text>
+            <Text style={styles.text}>
+              • Tenha sempre acesso a tecnologia de ponta.
+            </Text>
+            <Text style={styles.text}>
+              • Ao fim do contrato você tem a opção de upgrade tecnológico dos
+              equipamentos.
+            </Text>
+            <Text style={styles.text}>
+              • Não prejudica seus limites de credito perante os bancos.
+            </Text>
+            <Text style={styles.text}>
+              • Não imobiliza os equipamentos no ativo da empresa, economizando
+              o custo do inventario.
+            </Text>
+            <Text style={styles.text}>
+              • Sem entrada, a sua empresa não necessita se descapitalizar.
+            </Text>
+            <Text style={styles.text}>
+              • Passível de dedução de IR, pois as mensalidades entram como
+              despesa.
+            </Text>
+            <Text style={styles.text}>
+              • Opção de continuar com o equipamento,, extensão com contrato com
+              parcelas reduzidas em 50%.
+            </Text>
+            <Text style={styles.text}>
+              • Vendendo de 2 a 3 sucos diários, paga-se fácil a parcela da
+              locação.
+            </Text>
+
+            <Text style={styles.text}>
+              Para saber mais como obter uma maquina ZUMMO através de locação,
+              entre em contato conosco.
+            </Text>
+
+            <Text style={styles.text}>
+              Telefone: (11) 4613-1500 / (11) 4612-8926
+            </Text>
+
+            <Text style={styles.text}>
+              E-mail: zummo@zummo.com.br / administração@zummo.com.br
+            </Text>
+
+            <View>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#ff6a00",
+                  height: 30,
+                  width: 150,
+                  marginBottom: 15,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+                onPress={() =>
+                  Linking.openURL("https://www.zummo.com.br/contato")
+                }
+              >
+                <Text style={{ color: "#fff" }}>Entre em contato!</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff"
+  },
+
+  text: {
+    marginBottom: 10
+  }
+});

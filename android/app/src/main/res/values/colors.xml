@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="splashBackground" type="color">#040608</item>
+    <item name="statusBarColor" type="color">#040608</item>
+</resources>

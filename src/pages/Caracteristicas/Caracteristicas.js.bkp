@@ -1,0 +1,637 @@
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  Linking
+} from "react-native";
+import Swiper from "react-native-swiper";
+
+import Icon from "react-native-vector-icons/FontAwesome";
+
+const window = Dimensions.get("window");
+const logo = require("../../images/logo.png");
+const logoBranco = require("../../images/logo-branco.png");
+const evs = require("../../images/evs.png");
+const evs_white = require("../../images/evs-white.png");
+const empresa = require("../../images/zummo-build.png");
+const world = require("../../images/world-map.png");
+const vertical1 = require("../../images/vertical1.png");
+const vertical2 = require("../../images/vertical2.png");
+const vertical3 = require("../../images/vertical3.png");
+const garantia = require("../../images/logos-garantia-empresa.png");
+const compare = require("../../images/compare.png");
+const filtro1 = require("../../images/filtro1.png");
+const filtro2 = require("../../images/filtro2.png");
+const ainia = require("../../images/logo-ainia.png");
+const sVertical = require("../../images/sistema-vertical-zummo.png");
+const infographic = require("../../images/infographic.png");
+const zummo25 = require("../../images/zummo25.png");
+const tabela = require("../../images/tabela.png");
+const slide14 = require("../../images/slide14.png");
+
+console.disableYellowBox = true;
+
+export default class Caracteristicas extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loader: false
+    };
+  }
+
+  static navigationOptions = {
+    title: "Características Exclusivas",
+    header: null
+  };
+
+  render() {
+    return (
+      <SafeAreaView>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          removeClippedSubviews={false}
+          bounces={true}
+          scrollEnabled={false}
+        >
+          <Swiper
+            style={styles.wrapper}
+            showsButtons={false}
+            showsPagination={true}
+            activeDotColor="#F6F6F6"
+            loop={false}
+            containerStyle={{
+              height: "100%"
+            }}
+          >
+            <View style={styles.slide1}>
+              <Image
+                source={logoBranco}
+                style={{
+                  width: 250,
+                  height: 50,
+                  resizeMode: "contain",
+                  marignBottom: 10
+                }}
+              />
+              <Text style={styles.textTitleWhite}>
+                CONFIRA NOSSOS DIFERENCIAIS!
+              </Text>
+              <Text style={styles.textWhite}>→</Text>
+            </View>
+
+            <View style={styles.slide2}>
+              <Image
+                source={evs}
+                style={{ width: 250, height: 77, resizeMode: "contain" }}
+              />
+              <Text style={styles.textTitleGray}>
+                “Exclusivo Sistema de Extração Vertical”
+              </Text>
+              <Text style={[styles.textGray, { fontWeight: "600" }]}>
+                100% SABOR NATURAL
+              </Text>
+              <Text
+                style={[styles.textGray, { textAlign: "center", marginTop: 5 }]}
+              >
+                O exclusivo Sistema de Extração Vertical da ZUMMO (EVS), corta a
+                fruta ao meio e faz a extração do suco no sentido vertical. Isso
+                se resume em máxima rentabilidade e um sabor 100% natural, sem
+                acidez.
+              </Text>
+            </View>
+
+            <View style={styles.slide3}>
+              <View>
+                <Image source={empresa} style={{ resizeMode: "contain" }} />
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  paddingVertical: 10
+                }}
+              >
+                <Image
+                  source={zummo25}
+                  style={{ width: 90, height: 69, resizeMode: "contain" }}
+                />
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={[styles.textTitleGray, { fontSize: 18 }]}>
+                    "A MÁQUINA MAIS VENDIDA
+                  </Text>
+                  <Text style={[styles.textTitleGray, { fontSize: 18 }]}>
+                    NO BRASIL E NO MUNDO"
+                  </Text>
+                </View>
+              </View>
+              <View style={{ backgroundColor: "#ff6a00", paddingTop: 15 }}>
+                <Text style={styles.textWhite}>
+                  <Text>A</Text>
+                  <Text style={{ fontWeight: "bold" }}> ZUMMO</Text>
+                  <Text>
+                    {" "}
+                    foi fundada em 1992 em Valência, Espanha, a partir de um
+                    objetivo:
+                  </Text>
+                  <Text style={{ fontWeight: "bold" }}>
+                    {" "}
+                    "fabricar espremedores profissionais com um sistema de
+                    extração de alta tecnologia, a qual substitui as
+                    deficiências do sistema rotacional."
+                  </Text>
+                </Text>
+              </View>
+
+              <View style={{ backgroundColor: "#ff6a00" }}>
+                <Text style={styles.textWhite}>
+                  <Text>
+                    Assim nasceu nosso sistema de extração vertical, o
+                  </Text>
+                  <Text style={{ fontWeight: "bold", fontStyle: "italic" }}>
+                    Efficient Vertical System (EVS),
+                  </Text>
+                  <Text>que revolucionou o mercado.</Text>
+                </Text>
+              </View>
+
+              <View style={{ backgroundColor: "#ff6a00", paddingBottom: 15 }}>
+                <Text style={styles.textWhite}>
+                  <Text>
+                    Jã são mais de 25 anos de história, no Brasil e no mundo,
+                    sendo reconhecidos internacionalmente por nosso sistema
+                    exclusivo de extração (EVS) em mais de 96 países.
+                  </Text>
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.slide4}>
+              <Image
+                source={world}
+                style={{ width: 300, height: 152, resizeMode: "contain" }}
+              />
+              <Text
+                style={[
+                  styles.textWhite,
+                  { textAlign: "center", marginTop: 10 }
+                ]}
+              >
+                Transformando pouco a pouco em uma referência mundial em design
+                e fabricação de máquinas automáticas espremedora de cítricos, e
+                comercializando seus produtos em mais de 96 países.
+              </Text>
+            </View>
+
+            <View style={styles.slide1}>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                Hoje, 27 anos depois, a ZUMMO se converteu em uma aposta
+                consolidada, uma marca de prestígio, e qualidade em seu setor de
+                atuação, aprovado por seu Sistema exclusivo de Extração Vertical
+                (EVS – Efficient Vertical System)
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                A NET LIGHT LTDA, que atua na área gastronômica desde 1997, é
+                representante exclusivo da ZUMMO no Brasil ao longo destes 23
+                anos, sempre introduzindo novidades com extrema qualidade e que
+                ao mesmo tempo reduzam custos, otimizem e facilitem o trabalho
+                do setor.
+              </Text>
+            </View>
+
+            <View style={styles.slide5}>
+              <Text
+                style={[
+                  styles.textTitleWhite,
+                  { textAlign: "center", fontSize: 30 }
+                ]}
+              >
+                Como se faz o suco mais puro?
+              </Text>
+              <View style={{ flexDirection: "row", padding: 20 }}>
+                <Image
+                  source={vertical1}
+                  style={{ width: 120, height: 100, resizeMode: "contain" }}
+                />
+                <Image
+                  source={vertical2}
+                  style={{ width: 120, height: 100, resizeMode: "contain" }}
+                />
+                <Image
+                  source={vertical3}
+                  style={{ width: 120, height: 100, resizeMode: "contain" }}
+                />
+              </View>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                Corte perfeito
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                Sistema de extração vertical
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                Suco puro! Sem acidez!
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                Melhor aproveitamento da fruta!
+              </Text>
+              <Image
+                source={logoBranco}
+                style={{
+                  width: 100,
+                  height: 30,
+                  resizeMode: "contain",
+                  marginTop: 15
+                }}
+              />
+            </View>
+
+            <View style={styles.slide1}>
+              <Text style={[styles.textTitleWhite, { textAlign: "center" }]}>
+                Por que a ZUMMO é diferente?
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Placa eletrônica de última geração: Indicador inteligente para
+                as peças mal posicionadas, Seletor de quantidade de frutas e
+                desligamento automático, Indicador para quantidade total de
+                frutas espremidas
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Velocidade na extração de até 40 frutas/minuto.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Realiza limpeza automática do filtro.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Cesto automático para até 150 frutas.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Única com 6 sensores de segurança.
+              </Text>
+            </View>
+
+            <View style={styles.slide4}>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Libera o operador a fazer outras tarefas, enquanto a máquina
+                está em funcionamento.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Rapidez e facilidade para desmontar e montar.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Design moderno, novas opções de cores.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Estruture de aço e inox com alta tecnologia.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Garantia de 1 ano contra defeito de fabricação.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Assistência e representantes em todo o Brasil.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Estoque completo de peças e entrega imediata.
+              </Text>
+              <Text style={[styles.textWhite, { textAlign: "center" }]}>
+                • Certificações nacionais e internacionais.
+              </Text>
+              <Image
+                source={garantia}
+                style={{
+                  width: 250,
+                  height: 67,
+                  resizeMode: "contain",
+                  marginTop: 15
+                }}
+              />
+            </View>
+
+            <View style={styles.slide9}>
+              <Image source={evs_white} style={{ marginBottom: 10 }} />
+              <Text style={[styles.textWhite, { marginBottom: 15 }]}>
+                <Text>Pelo exclusivo Sistem de</Text>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontStyle: "italic",
+                    color: "#ff6a00"
+                  }}
+                >
+                  {" "}
+                  Extração Vertical da ZUMMO (EVS)
+                </Text>
+                <Text>
+                  {" "}
+                  , que corta a fruta ao meio e faz a extração do suco no
+                  sentido vertical
+                </Text>
+              </Text>
+
+              <Text style={styles.textWhite}>
+                • CORTE PERFEITO, SEM DESTRUIR A CASCA, SABOR 100% NATURAL
+              </Text>
+
+              <Text style={styles.textWhite}>
+                • SUCO PURO! SEM ACIDEZ! MELHOR APROVEITAMENTO DA FRUTA
+              </Text>
+
+              <Text style={styles.textWhite}>
+                • NÃO LIBERA O ÓLEO ESSENCIAL DA CASCA E NÃO DESTRÓI AS SEMENTES
+              </Text>
+
+              <Text style={styles.textWhite}>
+                • NA COMPARAÇÃO COM OUTRAS MÁQUINAS, VEJA A DIFERENÇA NA
+                TEXTURA, COR E DURABILIDADE
+              </Text>
+
+              <Text style={styles.textWhite}>
+                • POR SUA PUREZA E AUSÊNCIA DE ÁCIDOS, O SUCO PODE SER
+                REFRIGERADO POR ATÉ 5 DIAS
+              </Text>
+            </View>
+
+            <View style={styles.slide2}>
+              <Text style={[styles.textGray, { textAlign: "center" }]}>
+                Abaixo, é possível identificar qual é o suco da ZUMMO e qual é o
+                suco de outro extrator. Por não ter o óleo essencial da semente
+                e da casca, o da ZUMMO não separa, decanta!
+              </Text>
+              <Image
+                source={compare}
+                style={{
+                  width: 300,
+                  height: 203,
+                  resizeMode: "contain",
+                  marginTop: 15
+                }}
+              />
+            </View>
+
+            <View style={styles.slide2}>
+              <Text style={[styles.textTitleGray, { textAlign: "center" }]}>
+                SISTEMA AUTOMÁTICO DE LIMPEZA DO FILTRO
+              </Text>
+              <Text style={[styles.textGray, { textAlign: "center" }]}>
+                Como funciona? Este novo sistema melhora o rendimento da
+                extração, graças ao seu Filtro de Limpeza Automático. Ele conta
+                com uma esteira de poliuretano, que entra em movimento graças a
+                um motor interno, ativado assim que a máquina entra em
+                funcionamento. Neste movimento rotativo, a esteira limpa o
+                filtro levando as sementes e o excesso de polpa para os mesmos
+                depósitos laterais de onde são descartadas o bagaço.
+              </Text>
+              <Image
+                source={filtro1}
+                style={{
+                  width: 300,
+                  height: 140,
+                  resizeMode: "contain",
+                  marginTop: 5
+                }}
+              />
+            </View>
+
+            <View style={styles.slide2}>
+              <Text style={[styles.textTitleGray, { textAlign: "center" }]}>
+                Quais são os principais benefícios deste sistema?
+              </Text>
+              <Text style={[styles.textGray, { textAlign: "center" }]}>
+                • Dedicar mais tempo para outras tarefas, já que "NÃO" precisará
+                limpar manualmente o filtro do seu espremedor.
+              </Text>
+              <Text style={[styles.textGray, { textAlign: "center" }]}>
+                • Evita a obstrução da polpa na saída do líquido, fazendo com
+                que a extração fique mais rápida e eficaz.
+              </Text>
+              <Text style={[styles.textGray, { textAlign: "center" }]}>
+                • O sistema de filtragem permanece sempre limpo, sem polpa
+                acumulada e sem disperdicio, ou seja, aumento significante na
+                rentabilidade e no rendimento do suco. Pois, com a esteira
+                automática, não haverá mais o acumulado do líquido junto à
+                polpa.
+              </Text>
+              <Image
+                source={filtro2}
+                style={{
+                  width: 200,
+                  height: 169,
+                  resizeMode: "contain",
+                  marginTop: 5
+                }}
+              />
+            </View>
+
+            <View style={styles.slide2}>
+              <Image
+                source={logo}
+                style={{ width: 150, height: 30, resizeMode: "contain" }}
+              />
+              <Image
+                source={ainia}
+                style={{ width: 117, height: 41, resizeMode: "contain" }}
+              />
+              <Text style={styles.textTitleGray}>
+                Percentual de Resíduos detectados nos “Sucos de Laranja”
+              </Text>
+              <Image
+                source={sVertical}
+                style={{ width: 300, height: 202, resizeMode: "contain" }}
+              />
+              <Text style={styles.textGray}>
+                RESUMO DOS RESULTADOS: Em um regime de funcionamento dos
+                equipamentos em contínuo, o “Sistema A (ZUMMO)” alcançou
+                comparativamente níveis de resíduos de praguicidas mais baixos
+                que o “Sistema B (SistemaRotacional)”, para os diferentes pontos
+                do processo de extração analisado.
+              </Text>
+            </View>
+
+            <View style={styles.slide2}>
+              <Image
+                source={tabela}
+                style={{ width: "90%", resizeMode: "contain" }}
+              />
+            </View>
+
+            <View style={styles.slide2}>
+              <View
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Image
+                  source={slide14}
+                  style={{
+                    width: 333,
+                    height: 180,
+                    marginBottom: 15,
+                    resizeMode: "contain"
+                  }}
+                />
+
+                <Image
+                  source={logo}
+                  style={{
+                    width: 350,
+                    height: 50,
+                    marginBottom: 15,
+                    resizeMode: "contain"
+                  }}
+                />
+              </View>
+
+              <Text style={{ textAlign: "center" }}>
+                <Text style={styles.textTitleGray}>
+                  MENOS CUSTO, MAIS QUALIDADE.
+                </Text>
+                <Text>{"\n"}</Text>
+                <Text style={styles.textTitleGray}>COMPARE!</Text>
+              </Text>
+
+              <Text style={{ textAlign: "center" }}>
+                <Text>{"\n"}</Text>
+                <Icon name="phone" size={14} />{" "}
+                <Text style={styles.textGray}>(011) 4613-1500</Text>
+                <Text>{"\n"}</Text>
+                <Icon name="phone" size={14} />{" "}
+                <Text style={styles.textGray}>(011) 4612-8926</Text>
+              </Text>
+
+              <Text style={{ textAlign: "center" }}>
+                <Text>{"\n"}</Text>
+                <Icon name="envelope" size={14} />{" "}
+                <Text style={styles.textGray}>zummo@zummo.com.br</Text>
+                <Text>{"\n"}</Text>
+                <Icon name="envelope" size={14} />{" "}
+                <Text style={styles.textGray}>administração@zummo.com.br</Text>
+              </Text>
+
+              <Text style={{ textAlign: "center" }}>
+                <Text>{"\n"}</Text>
+                <Icon name="whatsapp" size={14} />{" "}
+                <Text style={styles.textGray}>(011) 99996-1818</Text>
+                <Text>{"\n"}</Text>
+                <Icon name="whatsapp" size={14} />{" "}
+                <Text style={styles.textGray}>(011) 95000-1384</Text>
+                <Text>{"\n"}</Text>
+              </Text>
+
+              <View>
+                <TouchableOpacity
+                style={{ backgroundColor: "#ff6a00", height: 40, width: 150, marginBottom: 15, justifyContent: 'center', alignItems: 'center'}}
+                  onPress={() =>
+                    Linking.openURL("https://www.zummo.com.br/contato")
+                  }
+                >
+                  <Text style={{color:"#fff"}}>Entre em contato!</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Swiper>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  wrapper: {},
+
+  slide1: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ff6a00"
+  },
+
+  slide2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFF"
+  },
+
+  slide3: {
+    //backgroundColor: "#ff6a00"
+    // justifyContent: "center",
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#fff",
+    paddingBottom: 10
+  },
+
+  slide4: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#333"
+  },
+
+  slide5: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000"
+  },
+
+  slide9: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000"
+  },
+
+  textTitleWhite: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    textAlign: "center",
+    color: "#fff",
+    fontSize: 22,
+    fontWeight: "bold",
+    fontFamily: "OpenSans-Regular"
+  },
+
+  textTitleGray: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    textAlign: "center",
+    color: "#555",
+    fontSize: 22,
+    fontWeight: "bold",
+    fontFamily: "OpenSans-Regular"
+  },
+
+  textWhite: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    textAlign: "left",
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "100",
+    fontFamily: "OpenSans-Regular"
+  },
+
+  textGray: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    textAlign: "left",
+    color: "#555",
+    fontSize: 14,
+    fontWeight: "100",
+    fontFamily: "OpenSans-Regular"
+  }
+});
