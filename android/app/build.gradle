@@ -256,15 +256,28 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 // Workaround para Gradle 8 - dependência explícita entre tasks
 afterEvaluate {
+    // --- Debug tasks (já tem)
+    def copyDebugReactNativeVectorIconFonts = tasks.findByName("copyDebugReactNativeVectorIconFonts")
     def parseDebugLocalResources = tasks.findByName("parseDebugLocalResources")
     def processDebugMainManifest = tasks.findByName("processDebugMainManifest")
-    def copyDebugReactNativeVectorIconFonts = tasks.findByName("copyDebugReactNativeVectorIconFonts")
     def compressDebugAssets = tasks.findByName("compressDebugAssets")
     def mergeExtDexDebug = tasks.findByName("mergeExtDexDebug")
     def mergeDebugNativeLibs = tasks.findByName("mergeDebugNativeLibs")
     def mergeDebugJavaResource = tasks.findByName("mergeDebugJavaResource")
-    def mergeLibDexDebug = tasks.findByName("mergeLibDexDebug") // <-- adicionada aqui
+    def mergeLibDexDebug = tasks.findByName("mergeLibDexDebug")
 
+    // --- Release tasks (adicione essas linhas)
+    def copyReleaseReactNativeVectorIconFonts = tasks.findByName("copyReleaseReactNativeVectorIconFonts")
+    def copyReleaseBundledJs = tasks.findByName("copyReleaseBundledJs")
+    def parseReleaseLocalResources = tasks.findByName("parseReleaseLocalResources")
+    def processReleaseMainManifest = tasks.findByName("processReleaseMainManifest")
+    def compressReleaseAssets = tasks.findByName("compressReleaseAssets")
+    def mergeExtDexRelease = tasks.findByName("mergeExtDexRelease")
+    def mergeReleaseNativeLibs = tasks.findByName("mergeReleaseNativeLibs")
+    def mergeReleaseJavaResource = tasks.findByName("mergeReleaseJavaResource")
+    def configureReleaseDependencies = tasks.findByName("configureReleaseDependencies")
+
+    // --- Dependências para Debug (já existente)
     def dependenciesForParseDebugLocalResources = [
         "checkDebugAarMetadata",
         "javaPreCompileDebug",
@@ -272,7 +285,6 @@ afterEvaluate {
         "mapDebugSourceSetPaths",
         "copyDebugReactNativeVectorIconFonts"
     ]
-
     if (parseDebugLocalResources != null) {
         dependenciesForParseDebugLocalResources.each { taskName ->
             def task = tasks.findByName(taskName)
@@ -281,37 +293,88 @@ afterEvaluate {
             }
         }
     }
-
     if (processDebugMainManifest != null && copyDebugReactNativeVectorIconFonts != null) {
         processDebugMainManifest.dependsOn(copyDebugReactNativeVectorIconFonts)
     }
-
     if (copyDebugReactNativeVectorIconFonts != null && compressDebugAssets != null) {
         compressDebugAssets.dependsOn(copyDebugReactNativeVectorIconFonts)
     }
-
     if (copyDebugReactNativeVectorIconFonts != null && mergeExtDexDebug != null) {
         mergeExtDexDebug.dependsOn(copyDebugReactNativeVectorIconFonts)
     }
-
     if (copyDebugReactNativeVectorIconFonts != null && mergeDebugNativeLibs != null) {
         mergeDebugNativeLibs.dependsOn(copyDebugReactNativeVectorIconFonts)
     }
-
     if (copyDebugReactNativeVectorIconFonts != null && mergeDebugJavaResource != null) {
         mergeDebugJavaResource.dependsOn(copyDebugReactNativeVectorIconFonts)
     }
-
-    if (copyDebugReactNativeVectorIconFonts != null && mergeLibDexDebug != null) {  // <-- aqui
+    if (copyDebugReactNativeVectorIconFonts != null && mergeLibDexDebug != null) {
         mergeLibDexDebug.dependsOn(copyDebugReactNativeVectorIconFonts)
     }
 
-        tasks.whenTaskAdded { task ->
+    // --- Dependências para Release (adicione isso)
+    def dependenciesForParseReleaseLocalResources = [
+        "checkReleaseAarMetadata",
+        "javaPreCompileRelease",
+        "mergeReleaseResources",
+        "mapReleaseSourceSetPaths",
+        "copyReleaseReactNativeVectorIconFonts",
+        "copyReleaseBundledJs"
+    ]
+    if (parseReleaseLocalResources != null) {
+        dependenciesForParseReleaseLocalResources.each { taskName ->
+            def task = tasks.findByName(taskName)
+            if (task != null) {
+                parseReleaseLocalResources.dependsOn(task)
+            }
+        }
+    }
+    if (processReleaseMainManifest != null) {
+        if (copyReleaseReactNativeVectorIconFonts != null) {
+            processReleaseMainManifest.dependsOn(copyReleaseReactNativeVectorIconFonts)
+        }
+        if (copyReleaseBundledJs != null) {
+            processReleaseMainManifest.dependsOn(copyReleaseBundledJs)
+        }
+    }
+    if (copyReleaseReactNativeVectorIconFonts != null && compressReleaseAssets != null) {
+        compressReleaseAssets.dependsOn(copyReleaseReactNativeVectorIconFonts)
+    }
+    if (copyReleaseReactNativeVectorIconFonts != null && mergeExtDexRelease != null) {
+        mergeExtDexRelease.dependsOn(copyReleaseReactNativeVectorIconFonts)
+    }
+    if (copyReleaseReactNativeVectorIconFonts != null && mergeReleaseNativeLibs != null) {
+        mergeReleaseNativeLibs.dependsOn(copyReleaseReactNativeVectorIconFonts)
+    }
+    if (copyReleaseReactNativeVectorIconFonts != null && mergeReleaseJavaResource != null) {
+        mergeReleaseJavaResource.dependsOn(copyReleaseReactNativeVectorIconFonts)
+    }
+    if (copyReleaseBundledJs != null && mergeExtDexRelease != null) {
+        mergeExtDexRelease.dependsOn(copyReleaseBundledJs)
+    }
+    if (copyReleaseBundledJs != null && mergeReleaseNativeLibs != null) {
+        mergeReleaseNativeLibs.dependsOn(copyReleaseBundledJs)
+    }
+    if (copyReleaseBundledJs != null && mergeReleaseJavaResource != null) {
+        mergeReleaseJavaResource.dependsOn(copyReleaseBundledJs)
+    }
+    if (configureReleaseDependencies != null) {
+        if (copyReleaseReactNativeVectorIconFonts != null) {
+            configureReleaseDependencies.dependsOn(copyReleaseReactNativeVectorIconFonts)
+        }
+        if (copyReleaseBundledJs != null) {
+            configureReleaseDependencies.dependsOn(copyReleaseBundledJs)
+        }
+    }
+
+    // Seu bloco para preReleaseBuild (já existente)
+    tasks.whenTaskAdded { task ->
         if (task.name == 'preReleaseBuild') {
             task.dependsOn('copyReleaseReactNativeVectorIconFonts')
             task.dependsOn('bundleReleaseJsAndAssets')
         }
     }
 }
+
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
