@@ -6,31 +6,22 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
   Platform,
-  Linking,
   SafeAreaView
 } from "react-native";
 import Gallery from "react-native-image-gallery";
 import RNFetchBlob from "rn-fetch-blob";
-import Orientation from 'react-native-orientation-locker';
-import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import Orientation from "react-native-orientation-locker";
+import { request, PERMISSIONS, RESULTS } from "react-native-permissions";
 
 export default class RepresentantesFotos extends Component {
-  static navigationOptions = {
-    title: "Fotos"
-  };
-
   constructor() {
     super();
     this.state = {
       isLoading: true,
-      ModalVisibleStatus: false,
-      TempImageURL: "",
-      ImageName: "",
       dataSource: [],
       index: 0,
       permissao: false
     };
-
     this.onChangeImage = this.onChangeImage.bind(this);
   }
 
@@ -40,7 +31,8 @@ export default class RepresentantesFotos extends Component {
 
   async componentDidMount() {
     Orientation.unlockAllOrientations();
-    await this.requestStoragePermission();
+    const perm = await this.requestStoragePermission();
+    this.setState({ permissao: perm });
     this.carregarFotos();
   }
 
@@ -48,10 +40,7 @@ export default class RepresentantesFotos extends Component {
     fetch("https://www.zummo.com.br/_app/representantes_fotos.php?page=1")
       .then(response => response.json())
       .then(responseJson => {
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson
-        });
+        this.setState({ isLoading: false, dataSource: responseJson });
       })
       .catch(error => {
         console.error(error);
@@ -59,60 +48,53 @@ export default class RepresentantesFotos extends Component {
   }
 
 async requestStoragePermission() {
-  if (Platform.OS === 'android') {
-    const sdkInt = Platform.constants.Release;
+  if (Platform.OS !== "android") return true;
 
+  const sdk = Platform.Version;
+
+  if (sdk >= 33) {
     // Android 13+
-    if (Platform.Version >= 33) {
-      const result = await request(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES);
-      return result === RESULTS.GRANTED;
-    }
-
-    // Android 10-12
-    if (Platform.Version >= 29) {
-      const result = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-      );
-      return result === PermissionsAndroid.RESULTS.GRANTED;
-    }
-
-    // Android < 10
-    const result = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-    );
-    return result === PermissionsAndroid.RESULTS.GRANTED;
+    const result = await request(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES);
+    return result === RESULTS.GRANTED;
   }
 
-  return true; // iOS ou outros
+  if (sdk >= 30 && sdk <= 32) {
+    // Android 11 e 12
+    const readGranted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+    );
+    console.log("READ_EXTERNAL_STORAGE:", readGranted);
+    return readGranted === PermissionsAndroid.RESULTS.GRANTED;
+  }
+
+  // Android 10 e abaixo
+  const writeGranted = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+  );
+  return writeGranted === PermissionsAndroid.RESULTS.GRANTED;
 }
 
-  async download(uri, file) {
-    const permissao = await this.requestStoragePermission();
 
-    if (!permissao) {
+  async download(uri, file) {
+    if (!this.state.permissao) {
       Alert.alert("Permissão", "Permissão negada para salvar a imagem.");
       return;
     }
 
     try {
       const dirs = RNFetchBlob.fs.dirs;
-      const pasta = `${dirs.DownloadDir}/Zummo`;
 
-      await RNFetchBlob.fs.mkdir(pasta).catch(() => {});
-
-      const caminho = `${pasta}/${file}`;
-
-      const res = await RNFetchBlob.config({
-        path: caminho,
-        addAndroidDownloads: {
-          useDownloadManager: true,
-          notification: true,
-          path: caminho,
-          description: "Imagem baixada por Zummo App"
-        }
-      }).fetch("GET", uri);
-
-      await RNFetchBlob.fs.scanFile([{ path: res.path(), mime: "image/jpeg" }]);
+      await RNFetchBlob.config({
+  addAndroidDownloads: {
+    useDownloadManager: true,
+    notification: true,
+    path: `${dirs.DownloadDir}/${file}`, // sem subpasta!
+    mime: "image/jpeg",
+    mediaScannable: true,
+    description: "Imagem baixada por Zummo App"
+  },
+  fileCache: true
+}).fetch("GET", uri);
 
       Alert.alert("Download", "Imagem salva com sucesso!");
     } catch (error) {
@@ -135,12 +117,13 @@ async requestStoragePermission() {
 
   get caption() {
     const { dataSource, index } = this.state;
+    if (!dataSource[index]) return null;
     return (
       <View
         style={{
           bottom: 0,
           height: 65,
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
+          backgroundColor: "rgba(0,0,0,0.7)",
           width: "100%",
           position: "absolute",
           justifyContent: "center"
