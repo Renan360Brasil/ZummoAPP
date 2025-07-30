@@ -140,8 +140,8 @@ android {
         applicationId "com.br.app.zummo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 22
-        versionName "1.9.7"
+        versionCode 23
+        versionName "1.9.8"
     }
 // Configuração para alinhar JVM Target Kotlin para Java 8
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
