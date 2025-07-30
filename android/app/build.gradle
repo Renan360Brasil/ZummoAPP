@@ -140,7 +140,7 @@ android {
         applicationId "com.br.app.zummo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 21
+        versionCode 22
         versionName "1.9.7"
     }
 // Configuração para alinhar JVM Target Kotlin para Java 8
@@ -215,6 +215,8 @@ dependencies {
     implementation "com.facebook.react:react-native:0.66.1"
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    
+    implementation 'com.facebook.soloader:soloader:0.10.4'
 
     implementation ("androidx.appcompat:appcompat:1.6.1") {
         version {
